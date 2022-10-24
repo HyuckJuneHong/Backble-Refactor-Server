@@ -21,8 +21,6 @@ public enum ErrorCode {
 
     DUPLICATED_MEMBERIDENTITY("이미 인사 내역이 등록된 아이디입니다",400);
 
-
-
     //TODO : item, payment 등등
 
     private String message;
