@@ -4,25 +4,33 @@ plugins {
     id 'java'
 }
 
+group = 'kr.co'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
 }
 
+repositories {
+    mavenCentral()
+    maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
+}
+
 ext {
     set('springCloudVersion', "2021.0.3")
 }
 
-jar {
-    enabled = false
-}
-
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation project(path: ":bbl-common")
 
     //config
     implementation 'org.springframework.cloud:spring-cloud-starter-config'

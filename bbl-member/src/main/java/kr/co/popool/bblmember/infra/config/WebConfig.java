@@ -1,6 +1,5 @@
 package kr.co.popool.bblmember.infra.config;
 
-import kr.co.popool.bblcommon.jwt.JwtProviderCommon;
 import kr.co.popool.bblmember.infra.interceptor.AuthInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,13 @@ public class WebConfig implements WebMvcConfigurer {
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/webjars/**",
-            "favicon.ico"
+            "favicon.ico",
+            "/member/login",
+            "/member/signUp",
+            "/corporate/login",
+            "/corporate/signUp",
+            "/tests/**",
+            "/actuator/**"
     };
 
     @Override
@@ -39,10 +44,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/members/login")
-                .excludePathPatterns("/members/signUp")
-                .excludePathPatterns("/tests/**")
-                .excludePathPatterns("/actuator/**")
                 .excludePathPatterns(AUTH_ARR);
     }
 
@@ -53,12 +54,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public AuthInterceptor authInterceptor(){
-        return new AuthInterceptor(jwtProviderCommon());
+        return new AuthInterceptor();
     }
-
-    @Bean
-    public JwtProviderCommon jwtProviderCommon(){
-        return new JwtProviderCommon();
-    }
-
 }

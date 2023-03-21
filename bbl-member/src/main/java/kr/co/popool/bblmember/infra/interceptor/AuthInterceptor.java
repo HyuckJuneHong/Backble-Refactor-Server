@@ -1,37 +1,34 @@
 package kr.co.popool.bblmember.infra.interceptor;
 
-import kr.co.popool.bblcommon.jwt.JwtProviderCommon;
-import lombok.RequiredArgsConstructor;
+import kr.co.popool.bblmember.service.JwtCustomService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.Option;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 public class AuthInterceptor implements HandlerInterceptor {
 
-    private final JwtProviderCommon jwtProviderCommon;
+    @Autowired
+    private JwtCustomService jwtCustomService;
 
     @Override
     public boolean preHandle(HttpServletRequest request,
                              @NotNull HttpServletResponse response,
                              @NotNull Object handler){
-        Optional<String> isToken = Optional.of(request.getHeader(HttpHeaders.AUTHORIZATION)
+        Optional<String> token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION)
                 .replace("Bearer", "").trim());
 
-        if(!isToken.isPresent()){
+        if(!token.isPresent()){
             return true;
         }
 
-        String token = isToken.get();
-
-        String identity = jwtProviderCommon.findIdentityByToken(token);
-        MemberThreadLocal.set(identity);
+        String identity = jwtCustomService.findIdentityByToken(token.get());
+        IdentityThreadLocal.set(identity);
 
         return true;
     }
@@ -42,10 +39,10 @@ public class AuthInterceptor implements HandlerInterceptor {
                            @NotNull Object handler,
                            ModelAndView modelAndView){
 
-        if(MemberThreadLocal.get()==null){
+        if(IdentityThreadLocal.get()==null){
             return;
         }
 
-        MemberThreadLocal.remove();
+        IdentityThreadLocal.remove();
     }
 }

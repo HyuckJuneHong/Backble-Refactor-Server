@@ -1,9 +1,22 @@
-server.port : 8761
+server:
+  port: 8761
+
 eureka:
-  instance:
-    hostname: bbleureka-env.eba-sk7czfia.ap-northeast-2.elasticbeanstalk.com
   client:
     register-with-eureka: false
     fetch-registry: false
-    service-url:
-      defaultZone: http://${eureka.instance.hostname}/eureka/
+
+spring:
+  application:
+    name: bbl-eureka
+
+  profiles:
+    active: local
+
+  cloud:
+    config:
+      name: damda-discovery
+
+  config:
+    import: optional:configserver:http://127.0.0.1:8888/
+#    import: optional:configserver:http://damda-config:8888/

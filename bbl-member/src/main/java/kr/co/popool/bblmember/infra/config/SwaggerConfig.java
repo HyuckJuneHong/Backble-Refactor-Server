@@ -30,9 +30,9 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String API_NAME = "Popool API";
+    private static final String API_NAME = "Backble API";
     private static final String API_VERSION = "2.0";
-    private static final String API_DESCRIPTION = "Popool 서버 API 문서";
+    private static final String API_DESCRIPTION = "Backble 서버 API 문서";
 
     //API 정보, 보안 컨텍스트 및 보안 체계를 포함하도록 API Docket 빈을 구성합니다.
     @Bean

@@ -1,13 +1,16 @@
 plugins {
+    id 'java'
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+group = 'kr.co'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
 }
 
 ext {
@@ -15,15 +18,9 @@ ext {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    //Eureka
+    //eureka
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
 }
 
@@ -31,10 +28,6 @@ dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
-}
-
-jar {
-	enabled = false
 }
 
 tasks.named('test') {

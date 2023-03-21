@@ -1,8 +1,12 @@
 plugins {
+    id 'java'
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
 }
+
+group = 'kr.co'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -10,38 +14,48 @@ configurations {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
+}
+
 ext {
     set('springCloudVersion', "2021.0.3")
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
-}
-
 dependencies {
-    implementation project(path: ":bbl-common")
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    //test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    //lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //mac1 error
+    implementation 'io.netty:netty-all'
+
+    //servelt
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api'
+
 
     //config
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
+
+    //actuator
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+
+    //amqp
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bus-amqp'
 
     //jwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation group: 'javax.xml.bind', name: 'jaxb-api'
 
-    //security
+    //Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.springframework.security:spring-security-test'
 
     //gateway
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
@@ -51,8 +65,10 @@ dependencies {
 
 }
 
-jar{
-    enabled = false
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 tasks.named('test') {

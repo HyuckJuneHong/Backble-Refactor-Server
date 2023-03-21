@@ -1,38 +1,53 @@
 package kr.co.popool.bblmember.controller;
 
 import io.swagger.annotations.ApiOperation;
-import kr.co.popool.bblcommon.error.model.ResponseFormat;
-import kr.co.popool.bblmember.domain.dto.CorporateDto;
+import kr.co.popool.bblmember.infra.error.model.ResponseFormat;
 import kr.co.popool.bblmember.service.CorporateService;
+import kr.co.popool.bblmember.service.model.dtos.CorporateDto;
+import kr.co.popool.bblmember.service.model.dtos.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/members")
+@RequestMapping("/corporate")
 @RequiredArgsConstructor
 public class CorporateController {
 
     private final CorporateService corporateService;
 
     @ApiOperation("기업 회원가입")
-    @PostMapping("/corporate/signUp")
-    public ResponseFormat corporateSignUp(@RequestBody @Valid CorporateDto.CREATE_CORPORATE create){
-        corporateService.corporateSignUp(create);
+    @PostMapping("/signUp")
+    public ResponseFormat createCorporate(@RequestBody @Valid CorporateDto.CREATE_CORPORATE create){
+        corporateService.createCorporate("corporate", create);
         return ResponseFormat.ok();
     }
 
     @ApiOperation("기업 정보 수정")
-    @PutMapping("/corporate")
-    public ResponseFormat corporateUpdate(@RequestBody @Valid CorporateDto.UPDATE_CORPORATE update_corporate){
-        corporateService.corporateUpdate(update_corporate);
+    @PutMapping
+    public ResponseFormat updateCorporate(@RequestBody @Valid CorporateDto.UPDATE_CORPORATE updateCorporate){
+        corporateService.updateCorporate("corporate", updateCorporate);
+        return ResponseFormat.ok();
+    }
+
+    @ApiOperation("비밀번호 수정")
+    @PutMapping("/password")
+    public ResponseFormat updatePasswordCorporate(@RequestBody @Valid MemberDto.UPDATE_PASSWORD update){
+        corporateService.updatePassword("corporate", update);
         return ResponseFormat.ok();
     }
 
     @ApiOperation("기업 정보 조회")
-    @GetMapping("/corporate")
+    @GetMapping
     public ResponseFormat<CorporateDto.READ_CORPORATE> getCorporate(){
-        return ResponseFormat.ok(corporateService.getCorporate());
+        return ResponseFormat.ok(corporateService.getCorporate("corporate"));
+    }
+
+    @ApiOperation("회원 탈퇴")
+    @DeleteMapping
+    public ResponseFormat deleteCorporate(@RequestParam("password") String password){
+        corporateService.deleteCorporate("corporate", password);
+        return ResponseFormat.ok();
     }
 }

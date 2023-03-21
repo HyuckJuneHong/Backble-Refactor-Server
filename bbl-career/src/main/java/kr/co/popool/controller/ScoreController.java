@@ -1,16 +1,16 @@
 package kr.co.popool.controller;
 
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
-import kr.co.popool.bblcommon.error.model.ResponseFormat;
-import kr.co.popool.domain.dto.score.QueryScoreDto.SHOWSCORE;
-import kr.co.popool.domain.dto.score.QueryScoreDto.SHOWSCORE.DELETE;
-import kr.co.popool.domain.dto.score.ScoreDto;
-import kr.co.popool.service.score.ScoreServiceImpl;
+import kr.co.popool.infra.error.model.ResponseFormat;
+import kr.co.popool.service.ScoreService;
+import kr.co.popool.service.model.dto.QueryScoreDto.SHOWSCORE;
+import kr.co.popool.service.model.dto.QueryScoreDto.SHOWSCORE.DELETE;
+import kr.co.popool.service.model.dto.ScoreDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/careers/{memberIdentity}/scores")
 public class ScoreController {
 
-  private final ScoreServiceImpl scoreService;
+  private final ScoreService scoreService;
   private final GradeController gradeController;
 
   @ApiOperation("개인 평가 내역 조회")
