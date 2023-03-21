@@ -1,0 +1,32 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, busrefresh
+
+server:
+  port: 8888
+
+spring:
+  application:
+    name: damda-config
+
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+
+  cloud:
+    config:
+      server:
+        git:
+          default-label: master
+          uri: git@github.com:HyuckJuneHong/git-local-config.git
+          ignoreLocalSshSettings: true
+          private-key: |
+            -----BEGIN EC PRIVATE KEY-----
+            MHcCAQEEIApv3LXFtHNXjxhNSMY5X86/o0bLnvu3Eqj5KD6qacT8oAoGCCqGSM49
+            AwEHoUQDQgAEFhC028LT7Nor00kKF+2NGafQA4o3kKx9rP+bCjvwwRNKchgWLTO2
+            6wZhlbGKZv/HkrgblvZpACn6GMnYqmvKNg==
+            -----END EC PRIVATE KEY-----
