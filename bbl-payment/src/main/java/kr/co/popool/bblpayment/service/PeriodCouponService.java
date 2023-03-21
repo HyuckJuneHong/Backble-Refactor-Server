@@ -30,7 +30,7 @@ public class PeriodCouponService {
         periodCouponRepository.save(findPeriodCoupon);
     }
 
-    public PeriodCouponDto.READ readPeriodCouponDetail(Long periodCouponId) {
+    public PeriodCouponDto.READ readPeriodCoupon(Long periodCouponId) {
         final PeriodCouponEntity findPeriodCoupon = periodCouponRepository.findById(periodCouponId)
                 .orElseThrow(() -> new NotFoundException("PeriodCoupon"));
 

@@ -21,8 +21,8 @@ public class PeriodCouponController {
     }
 
     @GetMapping("/{periodCouponId}")
-    public ResponseFormat<CouponDto.READ> readCouponDetail(@PathVariable("periodCouponId") Long periodCouponId) {
-        return ResponseFormat.ok(periodCouponService.readPeriodCouponDetail(periodCouponId));
+    public ResponseFormat<CouponDto.READ> readCoupon(@PathVariable("periodCouponId") Long periodCouponId) {
+        return ResponseFormat.ok(periodCouponService.readPeriodCoupon(periodCouponId));
     }
 
     @PutMapping
