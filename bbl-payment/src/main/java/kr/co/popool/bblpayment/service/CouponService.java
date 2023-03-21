@@ -39,7 +39,7 @@ public class CouponService {
 
     @Transactional
     public void deleteCoupon(Long couponId) {
-        final CouponEntity findCoupon = couponRepository.findById(couponId)
+        final  CouponEntity findCoupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new NotFoundException("Coupon"));
 
         couponRepository.delete(findCoupon);
