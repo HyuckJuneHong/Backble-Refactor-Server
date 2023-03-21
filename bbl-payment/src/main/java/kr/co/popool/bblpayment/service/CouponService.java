@@ -17,7 +17,7 @@ public class CouponService {
 
     @Transactional
     public void createCoupon(CouponDto.CREATE create) {
-        CouponEntity newCoupon = CouponEntity.toCouponEntity(create);
+        final CouponEntity newCoupon = CouponEntity.toCouponEntity(create);
         couponRepository.save(newCoupon);
     }
 
@@ -31,7 +31,7 @@ public class CouponService {
     }
 
     public CouponDto.READ readCoupon(Long couponId) {
-        CouponEntity findCoupon = couponRepository.findById(couponId)
+        final CouponEntity findCoupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new NotFoundException("Coupon"));
 
         return CouponEntity.toCouponDto(findCoupon);
@@ -39,7 +39,7 @@ public class CouponService {
 
     @Transactional
     public void deleteCoupon(Long couponId) {
-        CouponEntity findCoupon = couponRepository.findById(couponId)
+        final CouponEntity findCoupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new NotFoundException("Coupon"));
 
         couponRepository.delete(findCoupon);
