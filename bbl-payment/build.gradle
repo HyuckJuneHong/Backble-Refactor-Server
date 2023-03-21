@@ -31,15 +31,13 @@ dependencies {
 
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.batch:spring-batch-test'
 
     //config
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
     //Eureka
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
-    //h2
-    implementation 'com.h2database:h2'
 
     //feign
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
@@ -53,7 +51,6 @@ dependencies {
 
     //spring batch
     implementation 'org.springframework.boot:spring-boot-starter-batch'
-    testImplementation 'org.springframework.batch:spring-batch-test'
 }
 
 dependencyManagement {
