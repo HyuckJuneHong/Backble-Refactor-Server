@@ -62,7 +62,8 @@ public class CorporateEntity extends BaseEntity {
                 .password(passwordEncoder.encode(createCorporate.getPassword()))
                 .name(createCorporate.getName())
                 .birth(createCorporate.getBirth())
-                .phoneNumber(new PhoneNumber(createCorporate.getPhone()))
+                .email(createCorporate.getEmail())
+                .phoneNumber(new PhoneNumber(createCorporate.getPhoneNumber()))
                 .gender(Gender.of(createCorporate.getGender()))
                 .memberRole(MemberRole.ROLE_GUEST)
                 .build();

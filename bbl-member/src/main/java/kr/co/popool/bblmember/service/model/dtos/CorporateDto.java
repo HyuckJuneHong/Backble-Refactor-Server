@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -55,11 +56,14 @@ public class CorporateDto {
 
         @ApiModelProperty(example = "010-XXXX-XXXX")
         @NotBlank(message = "휴대폰 번호를 입력해주세요.")
-        private String phone;
+        private String phoneNumber;
 
         @ApiModelProperty(example = "MALE or FEMALE")
         @NotBlank(message = "성별을 입력해주세요.")
         private String gender;
+
+        @Email
+        private String email;
     }
 
     @Builder
