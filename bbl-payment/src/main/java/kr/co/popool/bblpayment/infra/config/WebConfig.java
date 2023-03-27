@@ -17,7 +17,13 @@ public class WebConfig implements WebMvcConfigurer {
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/webjars/**",
-            "favicon.ico"
+            "favicon.ico",
+            "/member/login",
+            "/member/signUp",
+            "/corporate/login",
+            "/corporate/signUp",
+            "/tests/**",
+            "/actuator/**"
     };
 
     @Override
