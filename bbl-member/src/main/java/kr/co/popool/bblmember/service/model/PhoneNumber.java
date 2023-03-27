@@ -16,27 +16,26 @@ public class PhoneNumber {
     private static final String EMPTY = "";
 
     @ApiModelProperty(example = "010-XXXX-XXXX")
-    @Column(name = "number")
-    private String number;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Builder
-    public PhoneNumber(String
-                                   number) {
-        this.number = number;
+    public PhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public PhoneNumber toCompactNumber() {
         // ex) 01012341234
-        return new PhoneNumber(number.replaceAll(DELIMITER, EMPTY));
+        return new PhoneNumber(phoneNumber.replaceAll(DELIMITER, EMPTY));
     }
 
     public PhoneNumber toFullNumber() {
-        if (number.contains(DELIMITER)) {
+        if (phoneNumber.contains(DELIMITER)) {
             return this;
         }
 
-        final int len = number.length();
-        StringBuilder sb = new StringBuilder(number);
+        final int len = phoneNumber.length();
+        StringBuilder sb = new StringBuilder(phoneNumber);
         int frontIndex = 0;
         int backIndex = 0;
 
@@ -53,4 +52,8 @@ public class PhoneNumber {
         return new PhoneNumber(sb.toString());
     }
 
+    @Override
+    public String toString() {
+        return phoneNumber + "";
+    }
 }

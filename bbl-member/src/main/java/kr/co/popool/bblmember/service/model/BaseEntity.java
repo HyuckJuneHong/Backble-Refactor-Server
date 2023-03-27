@@ -2,7 +2,6 @@ package kr.co.popool.bblmember.service.model;
 
 import kr.co.popool.bblmember.service.model.enums.Gender;
 import kr.co.popool.bblmember.service.model.enums.MemberRole;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,7 +48,8 @@ public class BaseEntity {
     protected String birth;
 
     @Embedded
-    protected PhoneNumber phone;
+    @Enumerated(value = EnumType.STRING)
+    protected PhoneNumber phoneNumber;
 
     @Embedded
     @Column(name = "address")
@@ -58,6 +58,7 @@ public class BaseEntity {
             @AttributeOverride(name = "address1", column = @Column(name = "address1")),
             @AttributeOverride(name = "address2", column = @Column(name = "address2"))
     })
+    @Enumerated(value = EnumType.STRING)
     protected Address address;
 
     @Column(name = "gender", nullable = false)
@@ -73,7 +74,7 @@ public class BaseEntity {
                       String email,
                       String name,
                       String birth,
-                      PhoneNumber phone,
+                      PhoneNumber phoneNumber,
                       Gender gender,
                       MemberRole memberRole) {
         this.identity = identity;
@@ -81,7 +82,7 @@ public class BaseEntity {
         this.email = email;
         this.name = name;
         this.birth = birth;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.memberRole = memberRole;
     }

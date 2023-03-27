@@ -24,7 +24,7 @@ public class MemberService {
 
     @Transactional
     public void createMember(MemberDto.CREATE_MEMBER create) {
-        checkPhoneNumber(create.getPhone());
+        checkPhoneNumber(create.getPhoneNumber());
 
         commonService.checkIdentity("member", create.getIdentity());
         commonService.checkPassword(create.getPassword(), create.getCheckPassword());
@@ -90,18 +90,21 @@ public class MemberService {
     }
 
     private void checkPhoneNumber(String phoneNumber) {
-        if(memberRepository.existsByPhone(new PhoneNumber(phoneNumber))) {
+        if(memberRepository.existsByPhoneNumber(new PhoneNumber(phoneNumber))) {
             throw new DuplicatedException(ErrorCode.DUPLICATED_PHONE);
         }
     }
 
     private void checkUpdate(MemberEntity memberEntity,
                              MemberDto.UPDATE update){
-        if(!memberEntity.getPhone().equals(new PhoneNumber(update.getPhoneNumber()))) {
+        String currentPhoneNumber = memberEntity.getPhoneNumber().toString();
+        String currentEmail = String.valueOf(memberEntity.getEmail());
+
+        if(!currentPhoneNumber.equals(update.getPhoneNumber())) {
             checkPhoneNumber(update.getPhoneNumber());
         }
 
-        if(!memberEntity.getEmail().equals(update.getEmail())) {
+        if(!currentEmail.equals(update.getEmail())) {
             checkEmail(update.getEmail());
         }
     }

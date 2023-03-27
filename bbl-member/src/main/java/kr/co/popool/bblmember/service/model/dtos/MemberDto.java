@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
@@ -66,7 +67,7 @@ public class MemberDto {
 
         @ApiModelProperty(example = "010-XXXX-XXXX")
         @NotBlank(message = "휴대폰 번호를 입력해주세요.")
-        private String phone;
+        private String phoneNumber;
 
         @ApiModelProperty(example = "MALE or FEMALE")
         @NotBlank(message = "성별을 입력해주세요.")
@@ -79,27 +80,22 @@ public class MemberDto {
     @NoArgsConstructor
     public static class UPDATE{
         @ApiModelProperty(example = "example@email.com")
-        @NotBlank(message = "이메일을 입력해주세요.")
+        @Email
         private String email;
 
         @ApiModelProperty(example = "홍길동")
-        @NotBlank(message = "이름을 입력해주세요.")
         private String name;
 
         @ApiModelProperty(example = "12345")
-        @NotBlank(message = "우편번호를 입력해주세요")
         private String zipCode;
 
         @ApiModelProperty(example = "서울특별시 강남구 선릉로 627")
-        @NotBlank(message = "기본 주소를 입력해주세요")
         private String address1;
 
         @ApiModelProperty(example = "101호")
-        @NotBlank(message = "상세 주소를 입력해주세요")
         private String address2;
 
         @ApiModelProperty(example = "010-XXXX-XXXX")
-        @NotBlank(message = "휴대폰 번호를 입력해주세요.")
         private String phoneNumber;
     }
 

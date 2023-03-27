@@ -20,7 +20,7 @@ import javax.persistence.*;
 @AttributeOverrides({
     @AttributeOverride(name = "id", column = @Column(name = "member_id")),
     @AttributeOverride(name = "email", column = @Column(name = "email", unique = true)),
-    @AttributeOverride(name = "phone", column = @Column(name = "phone_number", unique = true))
+    @AttributeOverride(name = "phoneNumber", column = @Column(name = "phone_number", unique = true))
 })
 public class MemberEntity extends BaseEntity {
 
@@ -52,7 +52,7 @@ public class MemberEntity extends BaseEntity {
                 .password(passwordEncoder.encode(create.getPassword()))
                 .name(create.getName())
                 .birth(create.getBirth())
-                .phoneNumber(new PhoneNumber(create.getPhone()))
+                .phoneNumber(new PhoneNumber(create.getPhoneNumber()))
                 .gender(Gender.of(create.getGender()))
                 .memberRole(MemberRole.ROLE_GUEST)
                 .build();
@@ -65,7 +65,7 @@ public class MemberEntity extends BaseEntity {
                 .address(memberEntity.getAddress())
                 .birth(memberEntity.getBirth())
                 .email(memberEntity.getEmail())
-                .phoneNumber(memberEntity.getPhone())
+                .phoneNumber(memberEntity.getPhoneNumber())
                 .gender(memberEntity.getGender())
                 .create_at(memberEntity.getCreatedAt())
                 .build();
@@ -74,8 +74,8 @@ public class MemberEntity extends BaseEntity {
     public void updateMember(MemberDto.UPDATE memberUpdate){
         this.name = memberUpdate.getName();
         this.email = memberUpdate.getEmail();
-        this.phone = PhoneNumber.builder()
-                .number(memberUpdate.getPhoneNumber())
+        this.phoneNumber = PhoneNumber.builder()
+                .phoneNumber(memberUpdate.getPhoneNumber())
                 .build();
         this.address = Address.builder()
                 .zipcode(memberUpdate.getZipCode())

@@ -20,7 +20,7 @@ import javax.persistence.*;
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "corporate_id")),
         @AttributeOverride(name = "email", column = @Column(name = "email", nullable = false)),
-        @AttributeOverride(name = "phone", column = @Column(name = "phone_number", nullable = false)),
+        @AttributeOverride(name = "phoneNumber", column = @Column(name = "phone_number", nullable = false)),
         @AttributeOverride(name = "address", column = @Column(nullable = false))
 })
 public class CorporateEntity extends BaseEntity {
@@ -75,7 +75,7 @@ public class CorporateEntity extends BaseEntity {
                 .address(corporateEntity.getAddress())
                 .birth(corporateEntity.getBirth())
                 .email(corporateEntity.getEmail())
-                .phoneNumber(corporateEntity.getPhone())
+                .phoneNumber(corporateEntity.getPhoneNumber())
                 .gender(corporateEntity.getGender())
                 .create_at(corporateEntity.getCreatedAt())
                 .businessName(corporateEntity.businessName)
@@ -94,8 +94,8 @@ public class CorporateEntity extends BaseEntity {
         this.businessNumber = updateCorporate.getBusinessNumber();
         this.name = updateCorporate.getName();
         this.email = updateCorporate.getEmail();
-        this.phone = PhoneNumber.builder()
-                .number(updateCorporate.getPhoneNumber())
+        this.phoneNumber = PhoneNumber.builder()
+                .phoneNumber(updateCorporate.getPhoneNumber())
                 .build();
         this.address = Address.builder()
                 .zipcode(updateCorporate.getZipCode())
