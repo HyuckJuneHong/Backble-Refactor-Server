@@ -18,13 +18,13 @@ public class CareerController {
 
     @ApiOperation("개인 인사 내역 조회")
     @GetMapping
-    public ResponseFormat<CareerDto.CAREERINFO> getCareer(@RequestParam String memberIdentity) {
+    public ResponseFormat<CareerDto.CAREERINFO> getCareer(@RequestParam(name = "memberIdentity") String memberIdentity) {
         return ResponseFormat.ok(careerService.getCareer(memberIdentity));
     }
 
     @ApiOperation("개인 인사 내역 등록")
     @PostMapping
-    public ResponseFormat createCareer(@RequestPart(value = "createDto") CareerDto.CREATE careerDto) {
+    public ResponseFormat createCareer(@RequestBody CareerDto.CREATE careerDto) {
         careerService.createCareer(careerDto);
         return ResponseFormat.ok();
     }
