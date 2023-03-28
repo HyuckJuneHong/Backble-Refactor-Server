@@ -2,7 +2,8 @@ package kr.co.popool.bblpayment.service.model.dto;
 
 import lombok.*;
 
-public class KakaoPayDto {
+public class
+KakaoPayDto {
 
     @Builder
     @Getter

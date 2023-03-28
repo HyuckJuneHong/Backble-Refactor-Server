@@ -34,7 +34,7 @@ public class KakaoSubscribeService {
 
 
     @Transactional
-    public void requestSubscription(KakaoSubscribeDto.FIRST_ORDER orderDTO) {
+    public KakaoSubscribeDto.FIRST_READY_RESPONSE requestSubscription(KakaoSubscribeDto.FIRST_ORDER orderDTO) {
 
         ItemMstEntity orderItem = itemRepository.findById(Long.parseLong(orderDTO.getItem_id()))
                 .orElseThrow(() -> new NotFoundException("item"));
@@ -65,10 +65,13 @@ public class KakaoSubscribeService {
         KakaoSubscribeDto.FIRST_READY_RESPONSE responseDTO = kakaoPayClient.requestFirstSubscribeForReady(ADMIN_KEY, requestDTO);
 
         savedKakaoPayLog.setTid(responseDTO.getTid());
+
+        return responseDTO;
     }
 
     @Transactional
-    public void successSubscription(Long kakaoPayLogId, String pgToken) {
+    public KakaoPayLogEntity successSubscription(Long kakaoPayLogId,
+                                                 String pgToken) {
 
         KakaoPayLogEntity findKakaoPayLog = kakaoPayLogRepository.findById(kakaoPayLogId)
                 .orElseThrow(() -> new NotFoundException("KakaoPaymentLog"));
@@ -80,8 +83,13 @@ public class KakaoSubscribeService {
                 .partner_order_id(String.valueOf(findKakaoPayLog.getId()))
                 .pg_token(pgToken)
                 .build();
+        KakaoSubscribeDto.FIRST_APPROVAL_RESPONSE responseDTO = null;
 
-        KakaoSubscribeDto.FIRST_APPROVAL_RESPONSE responseDTO = kakaoPayClient.requestFirstSubscribeForApproval(ADMIN_KEY, requestDTO);
+        try {
+            responseDTO = kakaoPayClient.requestFirstSubscribeForApproval(ADMIN_KEY, requestDTO);
+        }catch (Exception e){
+            return findKakaoPayLog;
+        }
 
         InventoryEntity memberInventory = inventoryRepository.findInventoryEntityByMemberId(findKakaoPayLog.getMemberId())
                 .orElseThrow(() -> new NotFoundException("inventory"));
@@ -90,6 +98,8 @@ public class KakaoSubscribeService {
 
         findKakaoPayLog.setSid(responseDTO.getSid());
         findKakaoPayLog.changePaymentStatusToSuccess();
+
+        return findKakaoPayLog;
     }
 
 }

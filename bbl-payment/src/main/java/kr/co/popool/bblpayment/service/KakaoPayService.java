@@ -34,7 +34,7 @@ public class KakaoPayService {
     private final String CANCEL_URL = "http://localhost:8080/payments/kakao/cancel";
 
     @Transactional
-    public void requestPayment(KakaoPayDto.ORDER order) {
+    public KakaoPayDto.READY_RESPONSE requestPayment(KakaoPayDto.ORDER order) {
         ItemMstEntity orderItem = itemRepository.findById(Long.parseLong(order.getItem_id()))
                 .orElseThrow(() -> new NotFoundException("item"));
 
@@ -46,20 +46,27 @@ public class KakaoPayService {
 
         savedKakaoPayLog.setTid(response.getTid());
         kakaoPayLogRepository.save(savedKakaoPayLog);
+
+        return response;
     }
 
     @Transactional
-    public void successPayment(Long kakaoPayLogId,
-                               String pgToken) {
+    public KakaoPayLogEntity successPayment(Long kakaoPayLogId,
+                                            String pgToken) {
         KakaoPayLogEntity findKakaoPayLog = kakaoPayLogRepository.findById(kakaoPayLogId)
                 .orElseThrow(() -> new NotFoundException("KakaoPaymentLog"));
 
         KakaoPayDto.APPROVAL_REQUEST request = KakaoPayLogEntity.toApprovalRequestDto(findKakaoPayLog, CID, pgToken);
-        kakaoPayClient.requestPayForApproval(ADMIN_KEY, request);
+        try {
+            kakaoPayClient.requestPayForApproval(ADMIN_KEY, request);
+        }catch (Exception e){
+            return findKakaoPayLog;
+        }
         reflectToMemberInventory(findKakaoPayLog.getMemberId(), findKakaoPayLog.getItem());
-
         findKakaoPayLog.changePaymentStatusToSuccess();
         kakaoPayLogRepository.save(findKakaoPayLog);
+
+        return findKakaoPayLog;
     }
 
     private void reflectToMemberInventory(Long memberId,
