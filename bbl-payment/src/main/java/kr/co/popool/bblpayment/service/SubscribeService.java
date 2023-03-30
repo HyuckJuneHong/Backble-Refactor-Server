@@ -24,7 +24,7 @@ public class SubscribeService {
     @Transactional
     public void updateSubscribe(SubscribeDto.UPDATE updateDTO) {
         SubscribeEntity findSubscribe = subscribeRepository.findById(updateDTO.getSubscribeId())
-                .orElseThrow(() -> new NotFoundException("Subscribe"));
+                .orElseThrow(() -> new NotFoundException("Subscribe Not Found Update"));
 
         findSubscribe.update(updateDTO);
         subscribeRepository.save(findSubscribe);
@@ -32,14 +32,14 @@ public class SubscribeService {
 
     public SubscribeDto.READ readSubscribe(Long subscribeId) {
         SubscribeEntity findSubscribe = subscribeRepository.findById(subscribeId)
-                .orElseThrow(() -> new NotFoundException("Subscribe"));
+                .orElseThrow(() -> new NotFoundException("Subscribe Not Found Read"));
         return SubscribeEntity.toSubscribeDto(findSubscribe);
     }
 
     @Transactional
     public void deleteSubscribe(Long subscribeId)  {
         SubscribeEntity findSubscribe = subscribeRepository.findById(subscribeId)
-                .orElseThrow(() -> new NotFoundException("Subscribe"));
+                .orElseThrow(() -> new NotFoundException("Subscribe Not Found Delete"));
         subscribeRepository.delete(findSubscribe);
     }
 }

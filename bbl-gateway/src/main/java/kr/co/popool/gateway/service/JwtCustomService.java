@@ -73,7 +73,7 @@ public class JwtCustomService {
     }
 
     public void isRequestHeaders(ServerHttpRequest request){
-        if(!request.getHeaders().containsKey(org.apache.http.HttpHeaders.AUTHORIZATION)){
+        if(!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)){
             throw new JwtTokenInvalidException(ErrorCode.FAIL_NO_AUTHORIZATION_HEADER);
         }
     }

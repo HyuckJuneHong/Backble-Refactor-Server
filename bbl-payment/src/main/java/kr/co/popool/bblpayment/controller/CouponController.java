@@ -6,9 +6,12 @@ import kr.co.popool.bblpayment.service.model.dto.CouponDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/items/coupon")
 @RestController
+@CrossOrigin(origins = "http://localhost:63342")
 public class CouponController {
 
     private final CouponService couponService;
@@ -19,9 +22,14 @@ public class CouponController {
         return ResponseFormat.ok();
     }
 
-    @GetMapping("/{couponId}")
+    @GetMapping("/all/{couponId}")
     public ResponseFormat<CouponDto.READ> readCoupon(@PathVariable("couponId") Long couponId) {
         return ResponseFormat.ok(couponService.readCoupon(couponId));
+    }
+
+    @GetMapping("/all")
+    public ResponseFormat<List<CouponDto.READ>> readCoupon() {
+        return ResponseFormat.ok(couponService.readAllCoupon());
     }
 
     @PutMapping

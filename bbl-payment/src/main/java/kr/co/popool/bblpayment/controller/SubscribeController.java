@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/items/subscribe")
+@CrossOrigin(origins = "http://localhost:63342")
 public class SubscribeController {
 
     private final SubscribeService subscribeService;

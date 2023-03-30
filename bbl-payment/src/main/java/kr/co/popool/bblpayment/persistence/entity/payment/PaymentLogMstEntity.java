@@ -1,7 +1,7 @@
 package kr.co.popool.bblpayment.persistence.entity.payment;
 
 import kr.co.popool.bblpayment.persistence.entity.item.ItemMstEntity;
-import kr.co.popool.bblpayment.service.model.BaseEntity;
+import kr.co.popool.bblpayment.persistence.BaseEntity;
 import kr.co.popool.bblpayment.service.model.enums.PaymentStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

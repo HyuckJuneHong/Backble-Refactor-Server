@@ -37,7 +37,7 @@ public class KakaoSubscribeService {
     public KakaoSubscribeDto.FIRST_READY_RESPONSE requestSubscription(KakaoSubscribeDto.FIRST_ORDER orderDTO) {
 
         ItemMstEntity orderItem = itemRepository.findById(Long.parseLong(orderDTO.getItem_id()))
-                .orElseThrow(() -> new NotFoundException("item"));
+                .orElseThrow(() -> new NotFoundException("item Not Found Request Subscription"));
 
         KakaoPayLogEntity kakaoPayLog = KakaoPayLogEntity.builder()
                 .memberId(Long.parseLong(orderDTO.getPartner_user_id()))
@@ -74,7 +74,7 @@ public class KakaoSubscribeService {
                                                  String pgToken) {
 
         KakaoPayLogEntity findKakaoPayLog = kakaoPayLogRepository.findById(kakaoPayLogId)
-                .orElseThrow(() -> new NotFoundException("KakaoPaymentLog"));
+                .orElseThrow(() -> new NotFoundException("KakaoPaymentLog Not Found Success Subscription"));
 
         KakaoSubscribeDto.FIRST_APPROVAL_REQUEST requestDTO = KakaoSubscribeDto.FIRST_APPROVAL_REQUEST.builder()
                 .cid(CID)
@@ -92,7 +92,7 @@ public class KakaoSubscribeService {
         }
 
         InventoryEntity memberInventory = inventoryRepository.findInventoryEntityByMemberId(findKakaoPayLog.getMemberId())
-                .orElseThrow(() -> new NotFoundException("inventory"));
+                .orElseThrow(() -> new NotFoundException("inventory Not Found"));
 
         memberInventory.doSubscription((SubscribeEntity) findKakaoPayLog.getItem(), responseDTO.getSid());
 

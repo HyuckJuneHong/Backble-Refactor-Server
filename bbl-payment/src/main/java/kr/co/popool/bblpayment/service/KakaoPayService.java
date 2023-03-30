@@ -36,7 +36,7 @@ public class KakaoPayService {
     @Transactional
     public KakaoPayDto.READY_RESPONSE requestPayment(KakaoPayDto.ORDER order) {
         ItemMstEntity orderItem = itemRepository.findById(Long.parseLong(order.getItem_id()))
-                .orElseThrow(() -> new NotFoundException("item"));
+                .orElseThrow(() -> new NotFoundException("item Not Found Request Payment"));
 
         final KakaoPayLogEntity kakaoPayLog = KakaoPayLogEntity.toKakaoPayLogEntity(order, orderItem);
         KakaoPayLogEntity savedKakaoPayLog = kakaoPayLogRepository.save(kakaoPayLog);
@@ -54,7 +54,7 @@ public class KakaoPayService {
     public KakaoPayLogEntity successPayment(Long kakaoPayLogId,
                                             String pgToken) {
         KakaoPayLogEntity findKakaoPayLog = kakaoPayLogRepository.findById(kakaoPayLogId)
-                .orElseThrow(() -> new NotFoundException("KakaoPaymentLog"));
+                .orElseThrow(() -> new NotFoundException("KakaoPaymentLog Not Success Payment"));
 
         KakaoPayDto.APPROVAL_REQUEST request = KakaoPayLogEntity.toApprovalRequestDto(findKakaoPayLog, CID, pgToken);
         try {
@@ -73,7 +73,7 @@ public class KakaoPayService {
                                           ItemMstEntity purchasedItem) {
 
         InventoryEntity buyerInventory = inventoryRepository.findInventoryEntityByMemberId(memberId)
-                .orElseThrow(() -> new NotFoundException("inventory"));
+                .orElseThrow(() -> new NotFoundException("inventory Not Found Reflect To Member Inventory"));
 
         if (purchasedItem instanceof CouponEntity) {
             buyerInventory.addCoupon(((CouponEntity) purchasedItem).getAmount());

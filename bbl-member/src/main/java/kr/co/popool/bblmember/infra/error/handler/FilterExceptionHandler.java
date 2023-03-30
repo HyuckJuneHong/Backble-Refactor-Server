@@ -2,8 +2,7 @@ package kr.co.popool.bblmember.infra.error.handler;
 
 import kr.co.popool.bblmember.infra.error.exception.JwtTokenExpiredException;
 import kr.co.popool.bblmember.infra.error.exception.JwtTokenInvalidException;
-import kr.co.popool.bblmember.infra.error.model.ResponseFormat;
-import org.springframework.http.HttpStatus;
+import kr.co.popool.bblmember.infra.error.model.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -12,16 +11,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class FilterExceptionHandler {
 
     @ExceptionHandler(JwtTokenExpiredException.class)
-    public ResponseEntity handleJwtTokenExpiredException(JwtTokenExpiredException e){
-        ResponseFormat responseFormat = ResponseFormat.expire();
-
-        return new ResponseEntity(responseFormat, HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<ErrorResponse> handleJwtTokenExpiredException(JwtTokenExpiredException e){
+        return ResponseEntity.ok(ErrorResponse.of(e.getMessage()));
     }
 
     @ExceptionHandler(JwtTokenInvalidException.class)
-    public ResponseEntity handleJwtTokenInvalidException(JwtTokenInvalidException e){
-        ResponseFormat responseFormat = ResponseFormat.fail(e.getMessage());
-
-        return new ResponseEntity(responseFormat, HttpStatus.OK);
+    public ResponseEntity<ErrorResponse> handleJwtTokenInvalidException(JwtTokenInvalidException e){
+        return ResponseEntity.ok(ErrorResponse.of(e.getMessage()));
     }
 }

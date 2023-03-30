@@ -24,7 +24,7 @@ public class PeriodCouponService {
     @Transactional
     public void updatePeriodCoupon(PeriodCouponDto.UPDATE updateDTO) {
         PeriodCouponEntity findPeriodCoupon = periodCouponRepository.findById(updateDTO.getPeriodCouponId())
-                .orElseThrow(() -> new NotFoundException("PeriodCoupon"));
+                .orElseThrow(() -> new NotFoundException("PeriodCoupon Not Found Update"));
         findPeriodCoupon.update(updateDTO);
 
         periodCouponRepository.save(findPeriodCoupon);
@@ -32,7 +32,7 @@ public class PeriodCouponService {
 
     public PeriodCouponDto.READ readPeriodCoupon(Long periodCouponId) {
         final PeriodCouponEntity findPeriodCoupon = periodCouponRepository.findById(periodCouponId)
-                .orElseThrow(() -> new NotFoundException("PeriodCoupon"));
+                .orElseThrow(() -> new NotFoundException("PeriodCoupon Not Found Read"));
 
         return PeriodCouponEntity.toPeriodCouponDto(findPeriodCoupon);
     }
@@ -40,7 +40,7 @@ public class PeriodCouponService {
     @Transactional
     public void deletePeriodCoupon(Long periodCouponId) {
         final PeriodCouponEntity findPeriodCoupon = periodCouponRepository.findById(periodCouponId)
-                .orElseThrow(() -> new NotFoundException("PeriodCoupon"));
+                .orElseThrow(() -> new NotFoundException("PeriodCoupon Not Found Delete"));
         periodCouponRepository.delete(findPeriodCoupon);
     }
 }

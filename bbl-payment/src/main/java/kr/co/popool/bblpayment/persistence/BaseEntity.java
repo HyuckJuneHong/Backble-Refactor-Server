@@ -1,4 +1,4 @@
-package kr.co.popool.bblpayment.service.model;
+package kr.co.popool.bblpayment.persistence;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

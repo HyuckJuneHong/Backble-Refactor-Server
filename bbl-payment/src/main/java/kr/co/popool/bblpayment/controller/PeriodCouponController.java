@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/items/periodCoupon")
+@CrossOrigin(origins = "http://localhost:63342")
 public class PeriodCouponController {
 
     private final PeriodCouponService periodCouponService;

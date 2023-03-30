@@ -12,6 +12,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:63342")
 public class CommonController {
 
     private final CommonService commonService;

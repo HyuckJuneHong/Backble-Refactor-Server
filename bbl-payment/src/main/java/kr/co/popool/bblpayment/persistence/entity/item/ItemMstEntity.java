@@ -1,6 +1,6 @@
 package kr.co.popool.bblpayment.persistence.entity.item;
 
-import kr.co.popool.bblpayment.service.model.BaseEntity;
+import kr.co.popool.bblpayment.persistence.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

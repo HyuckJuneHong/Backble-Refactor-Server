@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import kr.co.popool.bblmember.infra.error.model.ResponseFormat;
 import kr.co.popool.bblmember.service.MemberService;
 import kr.co.popool.bblmember.service.model.dtos.MemberDto;
+import kr.co.popool.bblmember.service.model.dtos.PasswordDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:63342")
 public class MemberController {
 
     private final MemberService memberService;
@@ -45,8 +47,8 @@ public class MemberController {
 
     @ApiOperation("회원 탈퇴")
     @DeleteMapping
-    public ResponseFormat deleteMember(@RequestParam("password") String password){
-        memberService.deleteMember(password);
+    public ResponseFormat deleteMember(@RequestBody PasswordDto password){
+        memberService.deleteMember(password.getPassword());
         return ResponseFormat.ok();
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/payments/kakao")
+@CrossOrigin(origins = "http://localhost:63342")
 public class KakaoPayController {
 
     private final KakaoPayService kakaoPayService;
