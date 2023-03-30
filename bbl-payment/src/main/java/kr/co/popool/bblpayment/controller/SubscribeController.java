@@ -2,10 +2,11 @@ package kr.co.popool.bblpayment.controller;
 
 import kr.co.popool.bblpayment.infra.error.model.ResponseFormat;
 import kr.co.popool.bblpayment.service.SubscribeService;
-import kr.co.popool.bblpayment.service.model.dto.CouponDto;
 import kr.co.popool.bblpayment.service.model.dto.SubscribeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,12 +22,17 @@ public class SubscribeController {
         return ResponseFormat.ok();
     }
 
-    @GetMapping("/{subscribeId}")
-    public ResponseFormat<CouponDto.READ> readCoupon(@PathVariable("subscribeId") Long subscribeId) {
+    @GetMapping("/all-subscribe/{subscribeId}")
+    public ResponseFormat<SubscribeDto.READ> readCoupon(@PathVariable("subscribeId") Long subscribeId) {
         return ResponseFormat.ok(subscribeService.readSubscribe(subscribeId));
     }
 
-    @PatchMapping
+    @GetMapping("/all-subscribe")
+    public ResponseFormat<List<SubscribeDto.READ>> readCoupon() {
+        return ResponseFormat.ok(subscribeService.readAllCoupon());
+    }
+
+    @PutMapping
     public ResponseFormat updateCoupon(@RequestBody SubscribeDto.UPDATE updateDTO) {
         subscribeService.updateSubscribe(updateDTO);
         return ResponseFormat.ok();

@@ -22,12 +22,12 @@ public class CouponController {
         return ResponseFormat.ok();
     }
 
-    @GetMapping("/all/{couponId}")
+    @GetMapping("/all-coupon/{couponId}")
     public ResponseFormat<CouponDto.READ> readCoupon(@PathVariable("couponId") Long couponId) {
         return ResponseFormat.ok(couponService.readCoupon(couponId));
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all-coupon")
     public ResponseFormat<List<CouponDto.READ>> readCoupon() {
         return ResponseFormat.ok(couponService.readAllCoupon());
     }

@@ -1,12 +1,15 @@
 package kr.co.popool.bblpayment.service;
 
-import kr.co.popool.bblpayment.service.model.dto.PeriodCouponDto;
-import kr.co.popool.bblpayment.persistence.entity.item.PeriodCouponEntity;
 import kr.co.popool.bblpayment.infra.error.exception.NotFoundException;
+import kr.co.popool.bblpayment.persistence.entity.item.PeriodCouponEntity;
 import kr.co.popool.bblpayment.persistence.repository.PeriodCouponRepository;
+import kr.co.popool.bblpayment.service.model.dto.PeriodCouponDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -35,6 +38,11 @@ public class PeriodCouponService {
                 .orElseThrow(() -> new NotFoundException("PeriodCoupon Not Found Read"));
 
         return PeriodCouponEntity.toPeriodCouponDto(findPeriodCoupon);
+    }
+
+    public List<PeriodCouponDto.READ> readAllCoupon(){
+        return periodCouponRepository.findAll().stream()
+                .map(PeriodCouponEntity::toPeriodCouponDto).collect(Collectors.toList());
     }
 
     @Transactional
