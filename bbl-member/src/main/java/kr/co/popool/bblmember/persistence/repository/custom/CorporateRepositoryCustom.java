@@ -1,4 +1,4 @@
-package kr.co.popool.bblmember.persistence.repository;
+package kr.co.popool.bblmember.persistence.repository.custom;
 
 import java.util.Optional;
 

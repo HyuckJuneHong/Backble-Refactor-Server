@@ -1,5 +1,7 @@
-package kr.co.popool.bblmember.service.model;
+package kr.co.popool.bblmember.persistence;
 
+import kr.co.popool.bblmember.service.model.Address;
+import kr.co.popool.bblmember.service.model.PhoneNumber;
 import kr.co.popool.bblmember.service.model.enums.Gender;
 import kr.co.popool.bblmember.service.model.enums.MemberRole;
 import lombok.EqualsAndHashCode;
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of="id", callSuper = false)
 @Getter
 @NoArgsConstructor
-public class BaseEntity {
+public class UserMstEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -69,14 +71,14 @@ public class BaseEntity {
     @Enumerated(value = EnumType.STRING)
     protected MemberRole memberRole;
 
-    public BaseEntity(String identity,
-                      String password,
-                      String email,
-                      String name,
-                      String birth,
-                      PhoneNumber phoneNumber,
-                      Gender gender,
-                      MemberRole memberRole) {
+    public UserMstEntity(String identity,
+                         String password,
+                         String email,
+                         String name,
+                         String birth,
+                         PhoneNumber phoneNumber,
+                         Gender gender,
+                         MemberRole memberRole) {
         this.identity = identity;
         this.password = password;
         this.email = email;

@@ -11,7 +11,7 @@ KakaoPayDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ORDER {
-        private String partner_user_id;
+        private String identity;
         private String item_id;
         private String item_name;
         private String quantity;
@@ -27,7 +27,7 @@ KakaoPayDto {
     public static class READY_REQUEST {
         private String cid;
         private String partner_order_id;
-        private String partner_user_id;
+        private String identity;
         private String item_name;
         private String quantity;
         private String total_amount;
@@ -60,7 +60,7 @@ KakaoPayDto {
         private String cid;
         private String tid;
         private String partner_order_id;
-        private String partner_user_id;
+        private String identity;
         private String pg_token;
     }
 
@@ -73,6 +73,6 @@ KakaoPayDto {
         private String tid;
         private String cid;
         private String partner_order_id;
-        private String partner_user_id;
+        private String identity;
     }
 }

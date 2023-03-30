@@ -1,72 +1,76 @@
 package kr.co.popool.service.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
 import javax.validation.constraints.NotBlank;
 
 public class ScoreDto {
+
     @Builder
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class SCOREINFO {
-        @JsonProperty("evaluator_identity")
-        @ApiModelProperty(example = "인사")
-        @NotBlank(message = "본인 아이디를 입력하세요")
+    public static class CREATE{
+        @NotBlank(message = "평가 대상 아이디를 입력하세요.")
+        private String memberIdentity;
+        @NotBlank(message = "본인 아이디를 입력하세요.")
         private String evaluatorIdentity;
-
         @ApiModelProperty(example = "근태")
-        @NotBlank(message = "근태점수를 입력하세요")
-        private int attendance;
-
+        private double attend;
         @ApiModelProperty(example = "성실성")
-        @NotBlank(message = "성실성 점수를 입력하세요")
-        private int sincerity;
-
+        private double since;
         @ApiModelProperty(example = "적극성")
-        @NotBlank(message = "적극성 점수를 입력하세요")
-        private int positiveness;
-
+        private double positive;
+        @ApiModelProperty(example = "협업능력")
+        private double cooperative;
         @ApiModelProperty(example = "기술스킬")
-        @NotBlank(message = "기술 점수를 입력하세요")
-        private int technical;
-
-        @ApiModelProperty(example = "협업 능력")
-        @NotBlank(message = "협업능력 점수를 입력하세요")
-        private int cooperative;
-
+        private double technic;
     }
 
     @Builder
-    @ToString
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class READ {
+        @NotBlank(message = "평가대상")
+        private String memberIdentity;
+        @NotBlank(message = "평가자")
+        private String evaluatorIdentity;
+        private double attend;
+        private double since;
+        private double positive;
+        private double cooperative;
+        private double technic;
+    }
+
+    @Builder
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class UPDATE {
+        @NotBlank(message = "평가 대상 아이디를 입력하세요.")
+        private String memberIdentity;
+        @NotBlank(message = "본인 아이디를 입력하세요.")
+        private String evaluatorIdentity;
         @ApiModelProperty(example = "근태")
-        @NotBlank(message = "근태점수를 입력하세요")
-        private int attendance;
-
+        private double attend;
         @ApiModelProperty(example = "성실성")
-        @NotBlank(message = "성실성 점수를 입력하세요")
-        private int sincerity;
-
+        private double since;
         @ApiModelProperty(example = "적극성")
-        @NotBlank(message = "적극성 점수를 입력하세요")
-        private int positiveness;
-
+        private double positive;
+        @ApiModelProperty(example = "협업능력")
+        private double cooperative;
         @ApiModelProperty(example = "기술스킬")
-        @NotBlank(message = "기술 점수를 입력하세요")
-        private int technical;
+        private double technic;
+    }
 
-        @ApiModelProperty(example = "협업 능력")
-        @NotBlank(message = "협업능력 점수를 입력하세요")
-        private int cooperative;
-
-        @JsonProperty("evaluator_identity")
-        @ApiModelProperty(example = "인사")
-        @NotBlank(message = "본인 아이디를 입력하세요요")
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class DELETE {
+        private String memberIdentity;
         private String evaluatorIdentity;
     }
 }

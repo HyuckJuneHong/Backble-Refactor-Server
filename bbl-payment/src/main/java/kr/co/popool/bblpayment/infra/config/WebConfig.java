@@ -26,6 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
             "/actuator/**"
     };
 
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -35,4 +36,5 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .maxAge(MAX_AGE_SECOND);
     }
+
 }

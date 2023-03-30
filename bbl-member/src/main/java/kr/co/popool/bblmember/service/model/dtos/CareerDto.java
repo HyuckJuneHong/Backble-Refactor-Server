@@ -1,4 +1,4 @@
-package kr.co.popool.service.model.dto;
+package kr.co.popool.bblmember.service.model.dtos;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -15,12 +15,6 @@ public class CareerDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CREATE {
-        @NotBlank(message = "본인의 아이디를 입력하세요")
-        private String memberIdentity;
-
-        @NotBlank(message = "이름를 입력해주세요.")
-        private String name;
-
         @NotBlank(message = "재직 기간을 입력해주세요")
         private String period;
 
@@ -36,14 +30,11 @@ public class CareerDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class READ {
-        private String memberIdentity;
-
+        private String phoneNumber;
+        private String email;
         private String name;
-
         private String period;
-
         private String context;
-
         private String filePath;
     }
 
@@ -52,10 +43,7 @@ public class CareerDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class UPDATE {
-        private String memberIdentity;
-
-        @NotBlank(message = "이름를 입력해주세요.")
-        private String name;
+        private Long careerId;
 
         @NotBlank(message = "재직 기간을 입력해주세요")
         private String period;
@@ -64,15 +52,6 @@ public class CareerDto {
         private String context;
 
         private String filePath;
-    }
-
-    @Builder
-    @Getter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class DELETE {
-          @NotBlank(message = "본인의 아이디를 입력하세요")
-          private String memberIdentity;
     }
 }
 

@@ -1,16 +1,13 @@
-package kr.co.popool.persistence.entity;
+package kr.co.popool.bblmember.persistence.entity;
 
-import kr.co.popool.persistence.BaseEntity;
-import kr.co.popool.service.model.dto.CareerDto;
+import kr.co.popool.bblmember.persistence.BaseEntity;
+import kr.co.popool.bblmember.service.model.dtos.CareerDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Entity
@@ -21,13 +18,6 @@ import javax.persistence.Table;
         column = @Column(name = "career_id")
 )
 public class CareerEntity extends BaseEntity {
-
-    @Column(name = "member_identity", nullable = false)
-    private String memberIdentity;
-
-    @Column(name = "name", nullable = false)
-    private String name;
-
     @Column(name = "period", nullable = false)
     private String period;
 
@@ -37,33 +27,36 @@ public class CareerEntity extends BaseEntity {
     @Column(name = "file_path")
     private String filePath;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
     @Builder
-    public CareerEntity(String memberIdentity,
-                        String name,
-                        String period,
+    public CareerEntity(String period,
                         String context,
-                        String filePath) {
-        this.memberIdentity = memberIdentity;
-        this.name = name;
+                        String filePath,
+                        MemberEntity memberEntity) {
         this.period = period;
         this.context = context;
         this.filePath = filePath;
+        this.memberEntity = memberEntity;
     }
 
-    public static CareerEntity toCareerEntity(CareerDto.CREATE create) {
+    public static CareerEntity toCareerEntity(CareerDto.CREATE create,
+                                              MemberEntity memberEntity) {
         return CareerEntity.builder()
-            .memberIdentity(create.getMemberIdentity())
-            .name(create.getName())
             .context(create.getContext())
             .period(create.getPeriod())
             .filePath(create.getFilePath())
+            .memberEntity(memberEntity)
             .build();
     }
 
     public static CareerDto.READ toReadDto(CareerEntity careerEntity) {
         return CareerDto.READ.builder()
-                .memberIdentity(careerEntity.getMemberIdentity())
-                .name(careerEntity.getName())
+                .phoneNumber(careerEntity.getMemberEntity().getPhoneNumber().toString())
+                .email(careerEntity.getMemberEntity().getEmail())
+                .name(careerEntity.getMemberEntity().getName())
                 .period(careerEntity.getPeriod())
                 .context(careerEntity.getContext())
                 .filePath(careerEntity.getFilePath())
@@ -71,7 +64,6 @@ public class CareerEntity extends BaseEntity {
     }
 
     public void updateCareer(CareerDto.UPDATE update) {
-        this.name = update.getName();
         this.period = update.getPeriod();
         this.context = update.getContext();
         this.filePath = update.getFilePath();

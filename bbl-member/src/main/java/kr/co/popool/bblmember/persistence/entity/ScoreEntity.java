@@ -1,7 +1,7 @@
-package kr.co.popool.persistence.entity;
+package kr.co.popool.bblmember.persistence.entity;
 
-import kr.co.popool.persistence.BaseEntity;
-import kr.co.popool.service.model.dto.ScoreDto;
+import kr.co.popool.bblmember.persistence.BaseEntity;
+import kr.co.popool.bblmember.service.model.dtos.ScoreDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,12 +19,6 @@ import javax.persistence.*;
 )
 public class ScoreEntity extends BaseEntity {
     @Column(nullable = false)
-    private String memberIdentity;
-
-    @Column(nullable = false)
-    private String evaluatorIdentity;
-
-    @Column(nullable = false)
     private double attend;
 
     @Column(nullable = false)
@@ -39,54 +33,51 @@ public class ScoreEntity extends BaseEntity {
     @Column(nullable = false)
     private double technic;
 
+    @Column(nullable = false)
+    private String otherMemberIdentity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
     @Builder
-    public ScoreEntity(String memberIdentity,
-                       String evaluatorIdentity,
-                       double attend,
+    public ScoreEntity(double attend,
                        double since,
                        double positive,
                        double cooperative,
-                       double technic) {
-        this.memberIdentity = memberIdentity;
-        this.evaluatorIdentity = evaluatorIdentity;
+                       double technic,
+                       String otherMemberIdentity,
+                       MemberEntity memberEntity) {
         this.attend = attend;
         this.since = since;
         this.positive = positive;
         this.cooperative = cooperative;
         this.technic = technic;
+        this.otherMemberIdentity = otherMemberIdentity;
+        this.memberEntity = memberEntity;
     }
 
-    public static ScoreEntity toScoreEntity(ScoreDto.CREATE create) {
+    public static ScoreEntity toScoreEntity(ScoreDto.CREATE create,
+                                            MemberEntity memberEntity) {
         return ScoreEntity.builder()
-                .memberIdentity(create.getMemberIdentity())
-                .evaluatorIdentity(create.getEvaluatorIdentity())
                 .attend(create.getAttend())
                 .since(create.getSince())
                 .positive(create.getPositive())
                 .cooperative(create.getCooperative())
                 .technic(create.getTechnic())
+                .otherMemberIdentity(create.getOtherMemberIdentity())
+                .memberEntity(memberEntity)
                 .build();
     }
 
     public static ScoreDto.READ toReadDto(ScoreEntity scoreEntity){
         return ScoreDto.READ.builder()
-                .memberIdentity(scoreEntity.getMemberIdentity())
-                .evaluatorIdentity(scoreEntity.getEvaluatorIdentity())
+                .otherMemberIdentity(scoreEntity.getOtherMemberIdentity())
                 .attend(scoreEntity.getAttend())
                 .since(scoreEntity.getSince())
                 .positive(scoreEntity.getPositive())
                 .cooperative(scoreEntity.getCooperative())
                 .technic(scoreEntity.getTechnic())
                 .build();
-    }
-
-    public void updateScore(ScoreDto.UPDATE update) {
-        this.memberIdentity = update.getMemberIdentity();
-        this.evaluatorIdentity = update.getEvaluatorIdentity();
-        this.attend = update.getAttend();
-        this.since = update.getSince();
-        this.positive = update.getPositive();
-        this.cooperative = update.getCooperative();
-        this.technic = update.getTechnic();
     }
 }

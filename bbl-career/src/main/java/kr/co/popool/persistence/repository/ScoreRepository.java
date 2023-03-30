@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ScoreRepository extends JpaRepository<ScoreEntity, Long> , ScoreRepositoryCustom {
-    Optional<ScoreEntity> findById(Long id);
+public interface ScoreRepository extends JpaRepository<ScoreEntity, Long>{
+
     Optional<ScoreEntity> findByEvaluatorIdentity(String evaluatorIdentity);
+    Optional<ScoreEntity> findByMemberIdentity(String memberIdentity);
 }

@@ -60,6 +60,15 @@ dependencies {
 
     //spring batch
     implementation 'org.springframework.boot:spring-boot-starter-batch'
+
+//    //jwt
+//    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+//    implementation group: 'javax.xml.bind', name: 'jaxb-api'
+//
+//    //Security
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    testImplementation 'org.springframework.security:spring-security-test'
+
 }
 
 dependencyManagement {

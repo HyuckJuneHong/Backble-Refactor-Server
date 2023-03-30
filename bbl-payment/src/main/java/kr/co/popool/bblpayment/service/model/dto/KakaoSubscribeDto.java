@@ -10,7 +10,6 @@ public class KakaoSubscribeDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FIRST_ORDER {
-        private String partner_user_id;
         private String item_id;
         private String item_name;
         private String quantity;
@@ -25,8 +24,8 @@ public class KakaoSubscribeDto {
     @NoArgsConstructor
     public static class FIRST_READY_REQUEST {
         private String cid;
+        private String memberId;
         private String partner_order_id;
-        private String partner_user_id;
         private String item_name;
         private String quantity;
         private String total_amount;
@@ -61,7 +60,7 @@ public class KakaoSubscribeDto {
         private String cid;
         private String tid;
         private String partner_order_id;
-        private String partner_user_id;
+        private String memberId;
         private String pg_token;
     }
 
@@ -76,7 +75,6 @@ public class KakaoSubscribeDto {
         private String cid;
         private String sid;
         private String partner_order_id;
-        private String partner_user_id;
     }
 
     @Builder
@@ -90,7 +88,6 @@ public class KakaoSubscribeDto {
 
         @Setter
         private String partner_order_id;
-        private String partner_user_id;
         private String item_name;
         private String quantity;
         private String total_amount;
@@ -109,6 +106,5 @@ public class KakaoSubscribeDto {
         private String cid;
         private String sid;
         private String partner_order_id;
-        private String partner_user_id;
     }
 }

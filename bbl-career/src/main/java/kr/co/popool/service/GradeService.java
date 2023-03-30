@@ -6,7 +6,7 @@ import kr.co.popool.persistence.entity.GradeEntity;
 import kr.co.popool.persistence.entity.ScoreEntity;
 import kr.co.popool.persistence.repository.CareerRepository;
 import kr.co.popool.persistence.repository.GradeRepository;
-import kr.co.popool.service.model.dto.QueryGradeDto;
+import kr.co.popool.service.model.dto.GradeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,14 +21,14 @@ public class GradeService {
     private final GradeRepository gradeRepository;
     private final CareerRepository careerRepository;
 
-    public QueryGradeDto.GRADEDETAIL getGrade(String memberIdentity) {
+    public GradeDto.GRADEDETAIL getGrade(String memberIdentity) {
         return gradeRepository.showGradeDetail(memberIdentity)
                 .orElseThrow(() -> new NotFoundException("해당 아이디는 등급이 없습니다"));
     }
 
     @Transactional
     public void saveGradeEntity(List<ScoreEntity> allScore,
-                                QueryGradeDto.GRADEDETAIL gradeDetail,
+                                GradeDto.GRADEDETAIL gradeDetail,
                                 String memberIdentity) {
         try {
             updateGrade(allScore, memberIdentity, gradeDetail);
@@ -58,7 +58,7 @@ public class GradeService {
     @Transactional
     public void updateGrade(List<ScoreEntity> allScore,
                             String memberIdentity,
-                            QueryGradeDto.GRADEDETAIL gradeDto) {
+                            GradeDto.GRADEDETAIL gradeDto) {
         CareerEntity careerEntity = careerRepository.findByMemberIdentity(memberIdentity)
                 .orElseThrow(() -> new NotFoundException(memberIdentity));
         careerEntity.getGradeEntity().updateGrade(allScore, gradeDto);

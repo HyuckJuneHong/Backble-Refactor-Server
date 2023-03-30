@@ -1,7 +1,7 @@
 package kr.co.popool.bblmember.persistence.entity;
 
 import kr.co.popool.bblmember.service.model.Address;
-import kr.co.popool.bblmember.service.model.BaseEntity;
+import kr.co.popool.bblmember.persistence.UserMstEntity;
 import kr.co.popool.bblmember.service.model.PhoneNumber;
 import kr.co.popool.bblmember.service.model.dtos.MemberDto;
 import kr.co.popool.bblmember.service.model.enums.Gender;
@@ -22,7 +22,7 @@ import javax.persistence.*;
     @AttributeOverride(name = "email", column = @Column(name = "email", unique = true)),
     @AttributeOverride(name = "phoneNumber", column = @Column(name = "phone_number", unique = true))
 })
-public class MemberEntity extends BaseEntity {
+public class MemberEntity extends UserMstEntity {
 
     @Builder
     public MemberEntity(String identity,

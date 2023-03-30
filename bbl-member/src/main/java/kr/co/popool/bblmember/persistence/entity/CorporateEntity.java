@@ -1,7 +1,7 @@
 package kr.co.popool.bblmember.persistence.entity;
 
 import kr.co.popool.bblmember.service.model.Address;
-import kr.co.popool.bblmember.service.model.BaseEntity;
+import kr.co.popool.bblmember.persistence.UserMstEntity;
 import kr.co.popool.bblmember.service.model.PhoneNumber;
 import kr.co.popool.bblmember.service.model.dtos.CorporateDto;
 import kr.co.popool.bblmember.service.model.enums.Gender;
@@ -23,7 +23,7 @@ import javax.persistence.*;
         @AttributeOverride(name = "phoneNumber", column = @Column(name = "phone_number", nullable = false)),
         @AttributeOverride(name = "address", column = @Column(nullable = false))
 })
-public class CorporateEntity extends BaseEntity {
+public class CorporateEntity extends UserMstEntity {
 
     @Column(name = "ceo_name", nullable = false)
     private String ceoName;

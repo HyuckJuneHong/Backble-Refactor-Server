@@ -3,11 +3,12 @@ package kr.co.popool.service;
 import kr.co.popool.infra.error.exception.BadRequestException;
 import kr.co.popool.infra.error.exception.NotFoundException;
 import kr.co.popool.persistence.entity.CareerEntity;
+import kr.co.popool.persistence.entity.GradeEntity;
 import kr.co.popool.persistence.entity.ScoreEntity;
 import kr.co.popool.persistence.repository.CareerRepository;
 import kr.co.popool.persistence.repository.GradeRepository;
 import kr.co.popool.persistence.repository.ScoreRepository;
-import kr.co.popool.service.model.dto.QueryGradeDto;
+import kr.co.popool.service.model.dto.GradeDto;
 import kr.co.popool.service.model.dto.QueryScoreDto;
 import kr.co.popool.service.model.dto.QueryScoreDto.SHOWSCORE;
 import kr.co.popool.service.model.dto.ScoreDto;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -24,34 +26,28 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ScoreService {
     private final ScoreRepository scoreRepository;
-    private final CareerRepository careerRepository;
     private final GradeRepository gradeRepository;
 
-    private final GradeService gradeService;
-
-    /**
-     * 평가 조회
-     */
-    public List<SHOWSCORE> getScores(String memberIdentity) {
-        return scoreRepository.showAllScores(memberIdentity)
-                .orElseThrow(() -> new NotFoundException("memberIdentity"));
-    }
-
-    /**
-     * 평가 등록
-     */
     @Transactional
-    public void createScore(String memberIdentity,
-                            ScoreDto.SCOREINFO newScore) {
-        final CareerEntity careerEntity = careerRepository.findByMemberIdentity(memberIdentity)
-                .orElseThrow(() -> new BadRequestException("인사 내역이 존재하지 않습니다"));
+    public void createScore(ScoreDto.CREATE create) {
+        GradeEntity gradeEntity = firstScore(create.getMemberIdentity());
+
         scoreRepository.save(ScoreEntity.toScoreEntity(newScore, careerEntity));
 
-        QueryGradeDto.GETVALUE valueDto = gradeRepository.getValue(memberIdentity);
-        QueryGradeDto.GRADEDETAIL gradeDetail = gradeRepository.makeGradeDto(memberIdentity, valueDto)
+        GradeDto.GETVALUE valueDto = gradeRepository.getValue(memberIdentity);
+        GradeDto.GRADEDETAIL gradeDetail = gradeRepository.makeGradeDto(memberIdentity, valueDto)
                 .orElseThrow((() -> new BadRequestException("최종 등급 DTO 생성 실패")));
 
         gradeService.saveGradeEntity(findAllScore(memberIdentity), gradeDetail, memberIdentity);
+    }
+
+    private GradeEntity firstScore(String memberIdentity){
+        return !gradeRepository.existsByMemberIdentity(memberIdentity) ? GradeEntity.toFirstGradeEntity(memberIdentity) : null;
+    }
+
+    public List<SHOWSCORE> getScores(String memberIdentity) {
+        return scoreRepository.showAllScores(memberIdentity)
+                .orElseThrow(() -> new NotFoundException("memberIdentity"));
     }
 
     /**
@@ -81,8 +77,8 @@ public class ScoreService {
 
         scoreRepository.delete(scoreEntity);
 
-        QueryGradeDto.GETVALUE valueDto = gradeRepository.getValue(deleteDto.getMemberIdentity());
-        QueryGradeDto.GRADEDETAIL gradeDetail = gradeRepository.makeGradeDto(deleteDto.getMemberIdentity(), valueDto)
+        GradeDto.GETVALUE valueDto = gradeRepository.getValue(deleteDto.getMemberIdentity());
+        GradeDto.GRADEDETAIL gradeDetail = gradeRepository.makeGradeDto(deleteDto.getMemberIdentity(), valueDto)
                 .orElseThrow((() -> new BadRequestException("최종 등급 DTO 생성 실패")));
 
         gradeService.saveGradeEntity(findAllScore(deleteDto.getMemberIdentity()), gradeDetail, deleteDto.getMemberIdentity());
