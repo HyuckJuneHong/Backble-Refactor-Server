@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/member")
@@ -43,6 +44,12 @@ public class MemberController {
     @GetMapping
     public ResponseFormat<MemberDto.READ> getMember(){
         return ResponseFormat.ok(memberService.getMember());
+    }
+
+    @ApiOperation("모든 회원 정보 조회")
+    @GetMapping("/all-member")
+    public ResponseFormat<List<MemberDto.READ>> getAllMember(){
+        return ResponseFormat.ok(memberService.getAllMember());
     }
 
     @ApiOperation("회원 탈퇴")

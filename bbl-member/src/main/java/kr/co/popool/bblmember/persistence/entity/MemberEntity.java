@@ -71,6 +71,18 @@ public class MemberEntity extends UserMstEntity {
                 .build();
     }
 
+    public static MemberDto.READ_EMPLOYEE toMemberDto(MemberEntity memberEntity,
+                                                      Long careerId,
+                                                      Long gradeId){
+        return MemberDto.READ_EMPLOYEE.builder()
+                .name(memberEntity.getName())
+                .birth(memberEntity.getBirth())
+                .gender(memberEntity.getGender().toString())
+                .finalCareerId(careerId)
+                .finalGradeId(gradeId)
+                .build();
+    }
+
     public void updateMember(MemberDto.UPDATE memberUpdate){
         this.name = memberUpdate.getName();
         this.email = memberUpdate.getEmail();

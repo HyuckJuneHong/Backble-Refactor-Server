@@ -36,6 +36,7 @@ public class GradeEntity extends BaseEntity {
 
     private long memberCount;
 
+    @Column(name = "ranking")
     @Enumerated(value = EnumType.STRING)
     private Rank rank;
 

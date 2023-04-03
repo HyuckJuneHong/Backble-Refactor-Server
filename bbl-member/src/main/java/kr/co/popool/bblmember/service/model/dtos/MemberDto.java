@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class MemberDto {
 
@@ -142,6 +142,22 @@ public class MemberDto {
         private String birth;
 
         @ApiModelProperty(example = "2022-01-01")
-        private LocalDateTime create_at;
+        private LocalDate create_at;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    @NoArgsConstructor
+    public static class READ_EMPLOYEE{
+        private String name;
+
+        private String gender;
+
+        private String birth;
+
+        private Long finalCareerId;
+
+        private Long finalGradeId;
     }
 }

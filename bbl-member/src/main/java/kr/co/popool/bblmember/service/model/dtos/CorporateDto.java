@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class CorporateDto {
 
@@ -133,7 +133,7 @@ public class CorporateDto {
         private String birth;
 
         @ApiModelProperty(example = "2022-01-01")
-        private LocalDateTime create_at;
+        private LocalDate create_at;
 
         @ApiModelProperty(example = "변경할 대표 성함")
         private String ceoName;

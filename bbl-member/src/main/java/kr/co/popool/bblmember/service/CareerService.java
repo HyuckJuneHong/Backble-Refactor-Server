@@ -33,23 +33,33 @@ public class CareerService {
         careerRepository.save(careerEntity);
     }
 
-    public CareerDto.READ getCareer(Long careerId) {
+    public CareerDto.READ getCareer() {
         final MemberEntity memberEntity = getThreadLocal();
-        final CareerEntity careerEntity = careerRepository.findById(careerId)
+        final CareerEntity careerEntity = careerRepository.findByMemberEntity(memberEntity)
                 .orElseThrow(() -> new NotFoundException(memberEntity.getName() + "회원의 이력서가 존재하지 않습니다."));
 
-        return CareerEntity.toReadDto(careerEntity);
+        return CareerEntity.toReadDto(careerEntity, memberEntity);
     }
 
-    public List<CareerDto.READ> getAllCareer() {
-        return careerRepository.findAll().stream().map(CareerEntity::toReadDto).collect(Collectors.toList());
+    public CareerDto.READ getCareerIdentity(String identity) {
+        final MemberEntity memberEntity = memberRepository.findByIdentity(identity)
+                .orElseThrow(() -> new NotFoundException(identity + "회원이 존재하지 않습니다."));
+
+        final CareerEntity careerEntity = careerRepository.findByMemberEntity(memberEntity)
+                .orElseThrow(() -> new NotFoundException(memberEntity.getName() + "회원의 이력서가 존재하지 않습니다."));
+
+        return CareerEntity.toReadDto(careerEntity, memberEntity);
+    }
+
+    public List<CareerDto.READ_CAREER_CORPORATE> getAllCareer() {
+        return careerRepository.findAll().stream().map(CareerEntity::toReadCorporateDto).collect(Collectors.toList());
     }
 
     @Transactional
     public void updateCareer(CareerDto.UPDATE update) {
         final MemberEntity memberEntity = getThreadLocal();
 
-        CareerEntity careerEntity = careerRepository.findById(update.getCareerId())
+        CareerEntity careerEntity = careerRepository.findByMemberEntity(memberEntity)
                 .orElseThrow(() -> new NotFoundException(memberEntity.getName() + "해당 회원 이력서는 존재하지 않습니다."));
 
         careerEntity.updateCareer(update);
@@ -57,9 +67,9 @@ public class CareerService {
     }
 
     @Transactional
-    public void deleteCareer(Long careerId) {
+    public void deleteCareer() {
         final MemberEntity memberEntity = getThreadLocal();
-        CareerEntity careerEntity = careerRepository.findById(careerId)
+        CareerEntity careerEntity = careerRepository.findByMemberEntity(memberEntity)
                 .orElseThrow(() -> new NotFoundException(memberEntity.getName() + "해당 회원 이력서는 존재하지 않습니다."));
 
         careerRepository.delete(careerEntity);
@@ -69,5 +79,10 @@ public class CareerService {
         String identity = IdentityThreadLocal.get();
         return memberRepository.findByIdentity(identity)
                 .orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
+    }
+
+    public boolean isCareer() {
+        final MemberEntity memberEntity = getThreadLocal();
+        return careerRepository.existsByMemberEntity(memberEntity);
     }
 }

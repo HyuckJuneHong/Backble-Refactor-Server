@@ -27,7 +27,7 @@ public class CareerEntity extends BaseEntity {
     @Column(name = "file_path")
     private String filePath;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
@@ -52,14 +52,29 @@ public class CareerEntity extends BaseEntity {
             .build();
     }
 
-    public static CareerDto.READ toReadDto(CareerEntity careerEntity) {
+    public static CareerDto.READ toReadDto(CareerEntity careerEntity,
+                                           MemberEntity memberEntity) {
         return CareerDto.READ.builder()
-                .phoneNumber(careerEntity.getMemberEntity().getPhoneNumber().toString())
-                .email(careerEntity.getMemberEntity().getEmail())
-                .name(careerEntity.getMemberEntity().getName())
+                .name(memberEntity.getName())
+                .gender(memberEntity.getGender().toString())
+                .birth(memberEntity.getBirth())
+                .email(memberEntity.getEmail())
+                .phoneNumber(memberEntity.getPhoneNumber())
+                .address(memberEntity.getAddress())
                 .period(careerEntity.getPeriod())
-                .context(careerEntity.getContext())
                 .filePath(careerEntity.getFilePath())
+                .context(careerEntity.getContext())
+                .createAt(careerEntity.getCreatedAt())
+                .updateAt(careerEntity.getUpdatedAt())
+                .build();
+    }
+
+    public static CareerDto.READ_CAREER_CORPORATE toReadCorporateDto(CareerEntity careerEntity) {
+        return CareerDto.READ_CAREER_CORPORATE.builder()
+                .name(careerEntity.getMemberEntity().getName())
+                .gender(careerEntity.getMemberEntity().getGender().toString())
+                .birth(careerEntity.getMemberEntity().getBirth())
+                .identity(careerEntity.getMemberEntity().getIdentity())
                 .build();
     }
 

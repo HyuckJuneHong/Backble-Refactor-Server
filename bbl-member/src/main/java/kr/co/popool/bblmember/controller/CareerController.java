@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/careers")
+@RequestMapping("/career")
 @CrossOrigin(origins = "http://localhost:63342")
 public class CareerController {
 
@@ -24,15 +24,26 @@ public class CareerController {
         return ResponseFormat.ok();
     }
 
+    @GetMapping("/is-career")
+    public ResponseFormat<Boolean> isCareer(){
+        return ResponseFormat.ok(careerService.isCareer());
+    }
+
     @ApiOperation("이력서 조회")
-    @GetMapping("/{career_id}")
-    public ResponseFormat<CareerDto.READ> getCareer(@PathVariable(name = "career_id") Long careerId) {
-        return ResponseFormat.ok(careerService.getCareer(careerId));
+    @GetMapping
+    public ResponseFormat<CareerDto.READ> getCareer() {
+        return ResponseFormat.ok(careerService.getCareer());
+    }
+
+    @ApiOperation("이력서 조회")
+    @GetMapping("/{identity}")
+    public ResponseFormat<CareerDto.READ> getCareer(@PathVariable(name = "identity") String identity) {
+        return ResponseFormat.ok(careerService.getCareerIdentity(identity));
     }
 
     @ApiOperation("모든 이력서 조회")
     @GetMapping("/all-career")
-    public ResponseFormat<List<CareerDto.READ>> getAllCareer() {
+    public ResponseFormat<List<CareerDto.READ_CAREER_CORPORATE>> getAllCareer() {
         return ResponseFormat.ok(careerService.getAllCareer());
     }
 
@@ -44,9 +55,9 @@ public class CareerController {
     }
 
     @ApiOperation("개인 인사 내역 삭제")
-    @DeleteMapping("/{career_id}")
-    public ResponseFormat deleteCareer(@PathVariable(name = "career_id") Long careerId){
-        careerService.deleteCareer(careerId);
+    @DeleteMapping
+    public ResponseFormat deleteCareer(){
+        careerService.deleteCareer();
         return ResponseFormat.ok();
     }
 }

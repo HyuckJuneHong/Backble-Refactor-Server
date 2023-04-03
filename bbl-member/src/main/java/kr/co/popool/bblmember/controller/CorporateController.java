@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/corporate")
@@ -51,5 +52,12 @@ public class CorporateController {
     public ResponseFormat deleteCorporate(@RequestBody PasswordDto password){
         corporateService.deleteCorporate("corporate", password.getPassword());
         return ResponseFormat.ok();
+    }
+
+
+    @ApiOperation("모든 회원 인사 정보")
+    @GetMapping("/all-member")
+    public ResponseFormat<List<MemberDto.READ_EMPLOYEE>> getAllMemberEmployee(){
+        return ResponseFormat.ok(corporateService.getAllMemberEmployee());
     }
 }

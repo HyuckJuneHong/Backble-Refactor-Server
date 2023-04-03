@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -75,6 +78,13 @@ public class MemberService {
     public MemberDto.READ getMember() {
         final MemberEntity memberEntity = getThreadLocal();
         return MemberEntity.toMemberDto(memberEntity);
+    }
+
+    public List<MemberDto.READ> getAllMember() {
+        List<MemberEntity> memberEntity = memberRepository.findAll();
+        final MemberEntity my = getThreadLocal();
+        memberEntity.remove(my);
+        return memberEntity.stream().map(MemberEntity::toMemberDto).collect(Collectors.toList());
     }
 
     private MemberEntity getThreadLocal() {

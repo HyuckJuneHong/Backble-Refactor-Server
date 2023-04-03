@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface CareerRepository extends JpaRepository<CareerEntity, Long> {
     Optional<CareerEntity> findByMemberEntity(MemberEntity memberEntity);
+
+    boolean existsByMemberEntity(MemberEntity memberEntity);
 }

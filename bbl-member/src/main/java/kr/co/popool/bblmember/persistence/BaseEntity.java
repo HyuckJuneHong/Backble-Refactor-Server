@@ -2,17 +2,19 @@ package kr.co.popool.bblmember.persistence;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Getter
+@NoArgsConstructor
 public class BaseEntity {
 
   @Id
@@ -21,11 +23,11 @@ public class BaseEntity {
 
   @CreatedDate
   @Column(name = "created_at", nullable = false, updatable = false)
-  protected Timestamp created_at;
+  protected LocalDate createdAt;
 
   @LastModifiedDate
   @Column(name = "updated_at")
-  protected Timestamp updated_at;
+  protected LocalDate updatedAt;
 }
 
 
