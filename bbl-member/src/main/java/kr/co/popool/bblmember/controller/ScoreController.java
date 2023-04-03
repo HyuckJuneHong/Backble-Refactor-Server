@@ -28,12 +28,14 @@ public class ScoreController {
     @ApiOperation("본인 모든 평가 내역")
     @GetMapping
     public ResponseFormat<List<ScoreDto.READ>> getAllScore() {
+
         return ResponseFormat.ok(scoreService.getAllScore());
     }
 
     @ApiOperation("평가 했던 모든 내역")
     @GetMapping("/others")
     public ResponseFormat<List<ScoreDto.READ>> getAllYourScore() {
+
         return ResponseFormat.ok(scoreService.getAllOtherScore());
     }
 

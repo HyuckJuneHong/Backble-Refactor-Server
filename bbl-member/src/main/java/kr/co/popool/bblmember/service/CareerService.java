@@ -85,4 +85,14 @@ public class CareerService {
         final MemberEntity memberEntity = getThreadLocal();
         return careerRepository.existsByMemberEntity(memberEntity);
     }
+
+    public List<CareerDto.READ_CAREER_CORPORATE> getAllMyCareer() {
+        final MemberEntity memberEntity = getThreadLocal();
+        CareerEntity careerEntity = careerRepository.findByMemberEntity(memberEntity)
+                .orElseThrow(() -> new BadRequestException("Not Found Career"));
+        List<CareerEntity> careerEntities = careerRepository.findAll();
+        careerEntities.remove(careerEntity);
+
+        return careerEntities.stream().map(CareerEntity::toReadCorporateDto).collect(Collectors.toList());
+    }
 }

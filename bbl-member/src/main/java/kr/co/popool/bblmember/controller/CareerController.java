@@ -26,12 +26,14 @@ public class CareerController {
 
     @GetMapping("/is-career")
     public ResponseFormat<Boolean> isCareer(){
+
         return ResponseFormat.ok(careerService.isCareer());
     }
 
     @ApiOperation("이력서 조회")
     @GetMapping
     public ResponseFormat<CareerDto.READ> getCareer() {
+
         return ResponseFormat.ok(careerService.getCareer());
     }
 
@@ -45,6 +47,12 @@ public class CareerController {
     @GetMapping("/all-career")
     public ResponseFormat<List<CareerDto.READ_CAREER_CORPORATE>> getAllCareer() {
         return ResponseFormat.ok(careerService.getAllCareer());
+    }
+
+    @ApiOperation("모든 이력서 조회")
+    @GetMapping("/all-career/other")
+    public ResponseFormat<List<CareerDto.READ_CAREER_CORPORATE>> getAllMyCareer() {
+        return ResponseFormat.ok(careerService.getAllMyCareer());
     }
 
     @ApiOperation("인사 내역 수정")

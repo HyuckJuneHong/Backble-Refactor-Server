@@ -22,7 +22,7 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 public class JwtCustomService {
-
+    
     @Value("${jwt.secret}")
     private String SECRET_KEY;
 

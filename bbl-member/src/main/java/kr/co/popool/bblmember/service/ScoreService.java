@@ -29,12 +29,15 @@ public class ScoreService {
     @Transactional
     public void createScore(ScoreDto.CREATE create) {
         MemberEntity memberEntity = getThreadLocal();
+        MemberEntity otherMember = memberRepository.findByIdentity(create.getOtherMemberIdentity())
+                .orElseThrow(() -> new BadRequestException("Not Found Other Member"));
         checkScore(memberEntity, create.getOtherMemberIdentity());
+
 
         final ScoreEntity scoreEntity = ScoreEntity.toScoreEntity(create, memberEntity);
         scoreRepository.save(scoreEntity);
 
-        GradeEntity gradeEntity = firstScore(memberEntity);
+        GradeEntity gradeEntity = firstScore(otherMember);
         GradeDto.UPDATE update = scoreResult(gradeEntity, scoreEntity);
         gradeEntity.updateGrade(update);
         gradeRepository.save(gradeEntity);
@@ -84,11 +87,11 @@ public class ScoreService {
 
         double totalAvg = (attendAvg + sinceAvg + positiveAvg + cooperativeAvg + technicAvg)/5.0;
 
-        Rank rank = Rank.WHITE;
-        if(totalAvg < 1.0) rank = Rank.WHITE;
-        else if(totalAvg >= 1.0 && totalAvg < 3.0) rank = Rank.BRONZE;
-        else if(totalAvg >= 3.0 && totalAvg < 7.0) rank = Rank.SILVER;
-        else if(totalAvg >= 7.0) rank = Rank.GOLD;
+        Rank rank;
+        if(totalAvg >= 1.0 && totalAvg < 2.5) rank = Rank.BRONZE;
+        else if(totalAvg >= 2.5 && totalAvg < 4.0) rank = Rank.SILVER;
+        else if(totalAvg >= 4.0 && totalAvg <= 5.0) rank = Rank.GOLD;
+        else rank = Rank.WHITE;
 
         return GradeDto.UPDATE.builder()
                 .attendSum(attend)
