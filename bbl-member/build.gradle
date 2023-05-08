@@ -86,6 +86,9 @@ dependencies {
 
     //amqp
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bus-amqp'
+
+    //AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 }
 
 dependencyManagement {

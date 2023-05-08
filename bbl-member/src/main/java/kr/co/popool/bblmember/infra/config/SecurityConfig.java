@@ -20,9 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic().disable()  //기본 설정 disable 처리
-                .csrf().disable()       //csrf 보안 disable 처리
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //세션 사용 X
+                .httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http
                 .authorizeRequests()
                 .antMatchers("/**").permitAll();
