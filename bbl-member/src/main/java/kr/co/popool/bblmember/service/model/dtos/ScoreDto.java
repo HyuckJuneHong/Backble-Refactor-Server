@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 public class ScoreDto {
 
@@ -42,6 +43,10 @@ public class ScoreDto {
 
         @NotBlank(message = "평가대상")
         private String otherMemberIdentity;
+
+        private LocalDate create;
+
+        private LocalDate update;
     }
 
     @Builder

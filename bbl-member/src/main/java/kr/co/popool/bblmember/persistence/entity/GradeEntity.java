@@ -123,6 +123,8 @@ public class GradeEntity extends BaseEntity {
                 .name(gradeEntity.getMemberEntity().getName())
                 .rank(gradeEntity.getRank())
                 .memberCount(gradeEntity.getMemberCount())
+                .create(gradeEntity.createdAt)
+                .update(gradeEntity.updatedAt)
                 .build();
     }
 

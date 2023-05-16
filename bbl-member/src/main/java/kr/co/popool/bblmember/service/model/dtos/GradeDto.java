@@ -3,7 +3,12 @@ package kr.co.popool.bblmember.service.model.dtos;
 import io.swagger.annotations.ApiModelProperty;
 import kr.co.popool.bblmember.persistence.entity.MemberEntity;
 import kr.co.popool.bblmember.service.model.enums.Rank;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 public class GradeDto {
 
@@ -53,6 +58,10 @@ public class GradeDto {
     private String name;
 
     private long memberCount;
+
+    private LocalDate create;
+
+    private LocalDate update;
   }
 
   @Builder

@@ -52,7 +52,9 @@ public class SwaggerConfig {
                 .title(API_NAME)                // API 이름지정
                 .version(API_VERSION)           // API 버전
                 .description(API_DESCRIPTION)   // API 설명
-                .contact(new Contact("Popool", "https://github.com/HyuckjuneHong", "jjj8337721@naver.com"))
+                .contact(
+                        new Contact("Popool", "https://github.com/HyuckjuneHong", "jjj8337721@naver.com")
+                )
                 .build();
     }
 

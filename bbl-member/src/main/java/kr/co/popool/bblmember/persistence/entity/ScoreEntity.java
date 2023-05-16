@@ -78,6 +78,8 @@ public class ScoreEntity extends BaseEntity {
                 .positive(scoreEntity.getPositive())
                 .cooperative(scoreEntity.getCooperative())
                 .technic(scoreEntity.getTechnic())
+                .create(scoreEntity.createdAt)
+                .update(scoreEntity.updatedAt)
                 .build();
     }
 }

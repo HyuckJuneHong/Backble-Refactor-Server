@@ -43,6 +43,7 @@ public class GradeService {
                 .orElseThrow(() -> new BadRequestException("Not Found Member"));
         GradeEntity gradeEntity = firstScore(memberEntity);
         double totalAvg = getTotalAvg(gradeEntity);
+
         return GradeEntity.toReadDto(gradeEntity, totalAvg);
     }
 
